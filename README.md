@@ -161,3 +161,46 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Backend Placeholder (for Events API)
+
+If you want to test the Flutter app with a mock backend, you can use the following Python (Flask) code as a starting point. This provides all the endpoints the app expects for event features, with dummy data or empty responses.
+
+Create a file called `backend_placeholder.py` in the project root (or a new `backend/` folder) and run it with Python 3 and Flask installed.
+
+```python
+from flask import Flask, jsonify, request
+app = Flask(__name__)
+
+@app.route('/api/events', methods=['GET'])
+def get_events():
+    return jsonify({'events': []})
+
+@app.route('/api/events', methods=['POST'])
+def create_event():
+    return jsonify({'message': 'Event created'}), 201
+
+@app.route('/api/events/<event_id>', methods=['GET'])
+def get_event_details(event_id):
+    return jsonify({'event': {}})
+
+@app.route('/api/events/join/<event_id>', methods=['POST'])
+def join_event(event_id):
+    return jsonify({'message': 'Joined event'})
+
+@app.route('/api/events/user/<user_id>', methods=['GET'])
+def get_user_events(user_id):
+    return jsonify({'events': []})
+
+@app.route('/api/events/confirm/<event_id>', methods=['GET'])
+def confirm_event(event_id):
+    return jsonify({'message': 'Event confirmed'})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+```
+
+- Install Flask: `pip install flask`
+- Run: `python backend_placeholder.py`
+
+This will let your Flutter app connect to all the event endpoints it expects, even if you haven't built the real backend yet.
