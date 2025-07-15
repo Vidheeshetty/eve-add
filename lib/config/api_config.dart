@@ -21,4 +21,12 @@ class ApiConfig {
   
   // User Endpoints
   static String get customerEndpoint => '$baseUrl/api/customer';
+
+  // Event Endpoints
+  static String get eventsEndpoint => '$baseUrl/api/events';
+  static String get eventDetailsEndpoint => '$baseUrl/api/events/'; // Append event ID
+  static String get createEventEndpoint => '$baseUrl/api/events';
+  static String get joinEventEndpoint => '$baseUrl/api/events/join/'; // Append event ID
+  static String get myEventsEndpoint => '$baseUrl/api/events/user/'; // Append user ID
+  static String get eventConfirmationEndpoint => '$baseUrl/api/events/confirm/'; // Append event ID
 }

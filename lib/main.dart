@@ -12,12 +12,19 @@ import 'login_signup_page.dart';
 import 'app_footer.dart';
 import 'welcome_pages.dart';
 import 'forum_page.dart';
+import 'providers/event_provider.dart';
+import 'screens/events/events_screen.dart';
+import 'screens/events/events_details_screen.dart';
+import 'screens/events/create_event_screen.dart';
+import 'screens/events/join_event_screen.dart';
+import 'screens/events/confirmation_screen.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => EventProvider()),
       ],
       child: const MyApp(),
     ),
@@ -229,7 +236,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Saath App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C7CFF)),
         useMaterial3: true,
       ),
       initialRoute: '/',
@@ -238,9 +245,20 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginSignupPage(),
         '/welcome': (context) => const WelcomePage(),
         '/forum': (context) => const ForumPage(),
-        // Add other routes here as needed
+        '/events': (context) => const EventsScreen(),
+        '/events/create': (context) => const CreateEventScreen(),
+        '/events/details': (context) => const EventDetailsScreen(),
+        '/events/join': (context) => const JoinEventScreen(),
+        '/events/confirmation': (context) => const ConfirmationScreen(),
       },
       onGenerateRoute: (settings) {
+        // Handle dynamic routes
+        if (settings.name?.startsWith('/events/details/') ?? false) {
+          final eventId = settings.name?.split('/').last;
+          return MaterialPageRoute(
+            builder: (context) => EventDetailsScreen(eventId: eventId),
+          );
+        }
         // Handle any undefined routes
         return MaterialPageRoute(
           builder: (context) => Scaffold(
